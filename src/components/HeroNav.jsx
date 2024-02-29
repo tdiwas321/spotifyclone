@@ -4,7 +4,7 @@ export default function HeroNav(props) {
     <div className="w-full flex flex-row justify-end ">
       {!props.token ? (
         <a
-          href={`${props.AUTH_ENDPOINT}?client_id=${props.CLIENT_ID}&redirect_uri=${props.REDIRECT_URI}&response_type=${props.RESPONSE_TYPE}`}
+          href={`${props.AUTH_ENDPOINT}?client_id=${props.CLIENT_ID}&redirect_uri=${props.REDIRECT_URI}&response_type=${props.RESPONSE_TYPE}&scope=${props.SCOPE}`}
         >
           <button className="text-black bg-white rounded-2xl p-2 px-4 hover:scale-[1.1] hover:transition-[700ms] transition-[700ms]">
             Log In

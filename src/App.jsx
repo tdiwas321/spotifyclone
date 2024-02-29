@@ -16,12 +16,13 @@ export default function App() {
   const REDIRECT_URI = "http://localhost:5173";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
+  const SCOPE = "user-read-recently-played user-top-read"
 
   const [token, setToken] = useState("");
   /****hero section changer */
   const [homeState, sethomeState] = useState(true);
-  const [currentUser,setCurrentUser] = useState([]);
-  const [playlists,setPlayList] = useState([]);
+  const [currentUser, setCurrentUser] = useState([]);
+  const [playlists, setPlayList] = useState([]);
 
   function handleHome() {
     sethomeState(true);
@@ -42,42 +43,55 @@ export default function App() {
         .split("&")
         .find((elem) => elem.startsWith("access_token"))
         .split("=")[1];
-      console.log(token);
       window.localStorage.setItem("token", token);
     }
 
     setToken(token);
 
     /*********getting current user data */
-    axios.get("https://api.spotify.com/v1/me",{
-      headers:{
-        Authorization: `Bearer ${token}`
-      },
-    })
-    .then(res=>{
-      setCurrentUser(res.data)
-    })
+    axios
+      .get("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setCurrentUser(res.data);
+      });
 
     /**********getting current user playlistss */
-    axios.get("https://api.spotify.com/v1/me/playlists",{
-      headers:{
-        Authorization: `Bearer ${token}`
-      },
-    })
-    .then(res=>{
-      setPlayList(res.data.items);
-    })
+    axios
+      .get("https://api.spotify.com/v1/me/playlists", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setPlayList(res.data.items);
+      });
+
+    /************get recently played */
+    axios
+      .get("https://api.spotify.com/v1/me/player/recently-played", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      });
+
+      console.log(token)
   }, []);
 
   /**********function to logout */
   const logout = () => {
     setToken("");
     window.localStorage.removeItem("token");
-    setCurrentUser([])
-    
+    setCurrentUser([]);
+    setPlayList([]);
   };
 
-  console.log(token)
   return (
     <div className="  bg-black h-screen gap-2 ">
       <div className="flex flex-row p-3 gap-2 h-full">
@@ -89,7 +103,7 @@ export default function App() {
             />
           </div>
           <div className="h-full bg-darkestGrey rounded-md p-2">
-            <LeftLowerHero playlists={playlists}/>
+            <LeftLowerHero playlists={playlists} />
           </div>
         </div>
         <div className=" w-full bg-gradient-to-tl from-darkestGrey from-60% to-darkGrey bg-cover bg-no-repeat rounded-md gap-2 h-[90%]">
@@ -102,9 +116,10 @@ export default function App() {
               AUTH_ENDPOINT={AUTH_ENDPOINT}
               token={token}
               userName={currentUser.display_name}
+              SCOPE={SCOPE}
             />
           </div>
-          <div className="p-3">
+          <div className="p-3 overflow-y-scroll">
             {homeState ? <HomeHero /> : <SearchHero />}
           </div>
         </div>

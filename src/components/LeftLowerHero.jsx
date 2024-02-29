@@ -2,7 +2,6 @@
 import library from "../../public/images/library.png"
 export default function LeftLowerHero(props) {
   const playlist = props.playlists;
-  console.log(playlist);
 
   const playlistGrid = playlist.map((data) => {
     return (
@@ -16,7 +15,7 @@ export default function LeftLowerHero(props) {
     );
   });
   return <div className="text-white gap-3 w-full">
-    <span className="flex flex-row items-center gap-3 mb-4"><img src={library} alt="library svg" className="max-h-10"/> Your Library</span>
+    <span className="flex flex-row items-center gap-3 mb-4 p-2"><img src={library} alt="library svg" className="max-h-10 "/> Your Library</span>
     {playlistGrid}
     </div>;
 }
