@@ -8,9 +8,12 @@ export default {
       colors: {
         green: "#1db954",
         darkGrey: "	#212121",
-        black: "	#121212",
+        darkestGrey: "	#121212",
         grey: "	#535353",
         lightGrey: "#b3b3b3",
+      },
+      spacing: {
+        '20p': '20%',
       },
     },
   },
