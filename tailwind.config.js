@@ -13,8 +13,13 @@ export default {
         lightGrey: "#b3b3b3",
       },
       spacing: {
-        '20p': '20%',
+        "20p": "20%",
       },
+    },
+  },
+  variants: {
+    extend: {
+      display: ["group-hover"],
     },
   },
   plugins: [],

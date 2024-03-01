@@ -6,7 +6,7 @@ export default function LeftUpperHero(props) {
   return (
     <div className="h-full">
       <div className="text-white h-full flex flex-col justify-between ">
-        <img src={spotify} alt="spotify logo" className="max-h-6 w-max" />
+        {window.localStorage.getItem("token")?"":<img src={spotify} alt="spotify logo" className="max-h-6 w-max" />}
         <span className="flex flex-row text-center gap-4  text-sm items-center" >
           <img src={homeIcon} alt="homeIcon" className="max-h-6" />
           <button onClick={props.handleHome}>Home</button>
